@@ -49,6 +49,7 @@ jobs:
             sleep 20
       - run:
           name: Start container and setup redash instance
+          command: |
             docker-compose ps
             make setup-redash
       - run:
