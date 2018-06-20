@@ -52,6 +52,7 @@ jobs:
           command: |
             docker-compose ps
             make setup-redash
+      - run: pip install pipenv
       - run:
           name: Run tests
           command: make ui-tests
