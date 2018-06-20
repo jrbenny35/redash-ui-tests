@@ -32,9 +32,6 @@ jobs:
     steps:
       - checkout
       - run:
-           name: Clone upstream redash
-           command: git clone git@github.com:getredash/redash.git --depth 1
-      - run:
           name: Install Docker Compose
           command: |
             set -x
@@ -52,10 +49,9 @@ jobs:
           command: |
             docker-compose ps
             make setup-redash
-      - run: pip install pipenv
       - run:
           name: Run tests
-          command: make ui-tests
+          command: make docker-ui-tests
       - store_artifacts:
           path: report.html
 workflows:
