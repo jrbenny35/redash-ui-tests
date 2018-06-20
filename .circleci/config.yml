@@ -42,7 +42,7 @@ jobs:
           command: |
             set -x
             docker-compose pull --quiet
-            docker-compose up -d --build
+            docker-compose up -d
             sleep 20
       - run:
           name: Start container and setup redash instance
