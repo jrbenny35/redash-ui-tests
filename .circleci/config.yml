@@ -51,7 +51,7 @@ jobs:
             make setup-redash
       - run:
           name: Run tests
-          command: make docker-ui-tests
+          command: make circleci-docker-ui-tests
       - store_artifacts:
           path: report.html
 workflows:
