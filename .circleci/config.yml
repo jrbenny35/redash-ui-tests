@@ -54,7 +54,12 @@ jobs:
           command: |
             make clean
             make build
-	    docker run --net="host" --user="root" --env REDASH_SERVER_URL="${REDASH_SERVER_URL}" --mount type=bind,source="${CURDIR}",target=/home/user/src "${DOCKER_TAG}"
+	    docker run \
+		--net="host" \
+		--user="root" \
+		--env REDASH_SERVER_URL="${REDASH_SERVER_URL}" \
+		--mount type=bind,source="${CURDIR}",target=/home/user/src \
+		"${DOCKER_TAG}"
       - store_artifacts:
           path: report.html
 workflows:
