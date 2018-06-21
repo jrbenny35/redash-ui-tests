@@ -21,7 +21,7 @@ docker-ui-tests: clean build ## Build and run tests in container
 		"${DOCKER_TAG}"
 
 .PHONY: circleci-docker-ui-tests
-docker-ui-tests: clean build ## Build and run tests in container
+circleci-docker-ui-tests: clean build ## Build and run tests in container
 	@docker run \
 		--net="host" \
 		--env REDASH_SERVER_URL="${REDASH_SERVER_URL}" \
