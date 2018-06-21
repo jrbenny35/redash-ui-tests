@@ -23,7 +23,7 @@ jobs:
           name: Build docker image and push to repo
           command: |
             docker version
-            docker build -t mozilla/redash-ui-tests:latest .
+            docker build -t mozilla/redash-ui-tests:${CIRCLE_TAG} .
             docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASS
             docker push mozilla/redash-ui-tests:${CIRCLE_TAG}
   integration_test:
@@ -38,20 +38,23 @@ jobs:
             pip install docker-compose>=1.18
             docker-compose --version
       - run:
-          name: Pull images and build ui-tests image
+          name: Pull images, build ui-tests image, and start container
           command: |
             set -x
             docker-compose pull --quiet
             docker-compose up -d
             sleep 20
       - run:
-          name: Start container and setup redash instance
+          name: Setup redash instance
           command: |
             docker-compose ps
             make setup-redash
       - run:
           name: Run tests
-          command: make docker-ui-tests
+          command: |
+            make clean
+            make build
+	    docker run --net="host" --user="root" --env REDASH_SERVER_URL="${REDASH_SERVER_URL}" --mount type=bind,source="${CURDIR}",target=/home/user/src "${DOCKER_TAG}"
       - store_artifacts:
           path: report.html
 workflows:

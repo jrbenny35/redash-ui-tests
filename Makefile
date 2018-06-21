@@ -15,7 +15,6 @@ build: ## Build Docker image
 docker-ui-tests: clean build ## Build and run tests in container
 	@docker run \
 		--net="host" \
-		--user="root" \
 		--env REDASH_SERVER_URL="${REDASH_SERVER_URL}" \
 		--mount type=bind,source="${CURDIR}",target=/home/user/src \
 		"${DOCKER_TAG}"
