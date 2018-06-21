@@ -49,11 +49,12 @@ RUN chown -R user:user $HOME
 # Set working directory
 WORKDIR $HOME/src
 
-# Change from root to user
-USER user
 
 # Install dependencies under Python 3.6
 RUN pipenv install --python=$(which python3.6)
+
+# Change from root to user
+USER user
 
 ENTRYPOINT [ "pipenv", "run" ]
 

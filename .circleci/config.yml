@@ -51,15 +51,7 @@ jobs:
             make setup-redash
       - run:
           name: Run tests
-          command: |
-            make clean
-            make build
-	    docker run \
-		--net="host" \
-		--user="root" \
-		--env REDASH_SERVER_URL="${REDASH_SERVER_URL}" \
-		--mount type=bind,source="${CURDIR}",target=/home/user/src \
-		"${DOCKER_TAG}"
+          command: make docker-ui-tests
       - store_artifacts:
           path: report.html
 workflows:
