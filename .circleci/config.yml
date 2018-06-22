@@ -58,7 +58,12 @@ jobs:
     working_directory: ~/redash-ui-tests
     machine: true
     steps:
-      - checkout 
+      - checkout
+      - run:
+          name: Install dependencies
+          command: | 
+            pip install pipenv
+            pipenv install --dev
       - run:
           name: Flake8
           command: make flake8
