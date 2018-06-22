@@ -56,7 +56,8 @@ jobs:
           path: report.html
   code_quality:
     working_directory: ~/redash-ui-tests
-    machine: true
+    docker:
+      - image: circleci/python:3.6.5
     steps:
       - checkout
       - run:
