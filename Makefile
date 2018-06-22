@@ -24,6 +24,14 @@ docker-ui-tests: clean ## Run tests in container and copy report.html
 ui-tests: clean ## Run tests outside of container
 	@pipenv run pytest
 
+.PHONY: flake8
+flake8: clean ## Run flake8
+	@pipenv run flake8
+
+.PHONY: black
+black: clean ## Run python black and show diff
+	@pipenv run black --diff ./
+
 .PHONY: setup-redash
 setup-redash: clean ## Setup redash instance
 	@docker-compose run --rm server create_db
