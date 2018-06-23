@@ -28,8 +28,8 @@ ui-tests: clean ## Run tests outside of container
 flake8: clean ## Run flake8
 	@pipenv run flake8
 
-.PHONY: lint
-lint: clean ## Run python black and show diff
+.PHONY: formatting
+formatting: clean ## Run python black and show diff
 	@pipenv run black --diff --check --line-length 80 ./
 
 .PHONY: setup-redash

@@ -69,8 +69,8 @@ jobs:
           name: Flake8
           command: make flake8
       - run:
-          name: Lint and formatting check
-          command: make lint
+          name: Formatting check
+          command: make formatting
 workflows:
   version: 2
   build_test_deploy_release:
