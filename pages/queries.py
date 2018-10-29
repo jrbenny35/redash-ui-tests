@@ -102,6 +102,9 @@ class QueryDetailPage(Page):
 
     @property
     def title(self) -> typing.Any:
+        self.wait.until(
+            lambda _: self.find_element(*self._query_name_locator).is_displayed()
+        )
         return self.find_element(*self._query_name_locator).text
 
 
