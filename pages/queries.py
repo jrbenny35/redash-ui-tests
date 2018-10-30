@@ -59,19 +59,19 @@ class QueryDetailPage(Page):
     def description(self) -> typing.Any:
         return self.find_element(*self._query_description_locator).text
 
-    def dropdown_menu(self, item=None) -> typing.Any:
+    def click_dropdown_menu(self, text=None) -> typing.Any:
         menu = self.find_element(*self._query_dropdown_menu_locator)
         items = menu.find_elements(*self._query_dropdown_menu_item_locator)
         menu.click()
-        for term in items:
-            if term.text in item and item == "Fork":
-                term.click()
+        for item in (i for i in items if i.text in text):
+            if text == "Fork":
+                item.click()
                 return QueryDetailPage(self.selenium, self.base_url)
-            elif term.text in item and item == "Archive":
-                term.click()
+            if text == "Archive":
+                item.click()
                 self.find_element(*self._query_modal_archive_locator).click()
                 return
-        return
+        return Exception(f"{item} was not found within the dropdown menu.")
 
     def edit_description(self, description=None):
         try:
@@ -79,7 +79,7 @@ class QueryDetailPage(Page):
         except Exception:
             self.find_element(*self._query_description_locator).click()
         element = self.find_element(*self._query_description_edit_locator)
-        element.send_keys(" {}".format(description))
+        element.send_keys(f" {description}")
         element.send_keys(Keys.ENTER)
 
     @property
@@ -90,7 +90,7 @@ class QueryDetailPage(Page):
         element = self.find_element(*self._query_name_locator)
         element.click()
         element = self.find_element(*self._query_name_edit_locator)
-        element.send_keys(" {}".format(title))
+        element.send_keys(f" {title}")
         element.send_keys(Keys.ENTER)
 
     def publish(self):

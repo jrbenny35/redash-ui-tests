@@ -101,7 +101,7 @@ def test_query_by_special_char(
 def test_search_for_unpublished_query(
     create_queries: typing.Callable[..., None],
     login_page: LoginPage,
-    server_url,
+    server_url: str,
     selenium,
     root_user: User,
 ) -> None:
@@ -119,7 +119,7 @@ def test_search_for_unpublished_query(
 def test_search_for_query_by_id(
     create_queries: typing.Callable[..., None],
     login_page: LoginPage,
-    server_url,
+    server_url: str,
     selenium,
     user: User,
 ) -> None:
@@ -133,7 +133,7 @@ def test_search_for_query_by_id(
 def test_search_for_query_only_includes_search_result(
     create_queries: typing.Callable[..., None],
     login_page: LoginPage,
-    server_url,
+    server_url: str,
     selenium,
     user: User,
 ) -> None:
@@ -146,24 +146,25 @@ def test_search_for_query_only_includes_search_result(
 def test_change_query_title(
     create_queries: typing.Callable[..., None],
     login_page: LoginPage,
-    server_url,
+    server_url: str,
     selenium,
     root_user: User,
-    variables,
+    variables: typing.Dict,
 ) -> None:
     page = login_page.login(email=root_user.email, password=root_user.password)
     query_specs = variables["default"]["queries"]["edit-query"]
-    search = page.search("{}".format(query_specs["name"]))
+    query_name = query_specs["name"]
+    search = page.search(query_name)
     query = search.queries[0].click()
-    assert query.title == query_specs["name"]
+    assert query.title == query_name
     query.edit_title("NEW")
-    assert query.title == query_specs["name"] + " NEW"
+    assert query.title == f"{query_name} NEW"
 
 
 def test_change_query_description(
     create_queries: typing.Callable[..., None],
     login_page: LoginPage,
-    server_url,
+    server_url: str,
     selenium,
     root_user: User,
 ) -> None:
@@ -177,10 +178,10 @@ def test_change_query_description(
 def test_edit_query_description(
     create_queries: typing.Callable[..., None],
     login_page: LoginPage,
-    server_url,
+    server_url: str,
     selenium,
     root_user: User,
-    variables,
+    variables: typing.Dict,
 ) -> None:
     page = login_page.login(email=root_user.email, password=root_user.password)
     search = page.search("Default Query")
@@ -188,16 +189,16 @@ def test_edit_query_description(
     default_description = variables["default"]["queries"]["default"]["description"]
     assert query.description == default_description
     query.edit_description(" NEW NEW")
-    assert query.description == default_description + " NEW NEW"
+    assert query.description == f"{default_description} NEW NEW"
 
 
 def test_edit_query_source(
     create_queries: typing.Callable[..., None],
     login_page: LoginPage,
-    server_url,
+    server_url: str,
     selenium,
     root_user: User,
-    variables,
+    variables: typing.Dict,
 ) -> None:
     page = login_page.login(email=root_user.email, password=root_user.password)
     search = page.search("Default Query")
@@ -209,28 +210,28 @@ def test_edit_query_source(
 def test_query_fork(
     create_queries: typing.Callable[..., None],
     login_page: LoginPage,
-    server_url,
+    server_url: str,
     selenium,
     root_user: User,
-    variables,
+    variables: typing.Dict,
 ) -> None:
     page = login_page.login(email=root_user.email, password=root_user.password)
     search = page.search("Default Query")
     query = search.queries[0].click()
-    fork_query = query.dropdown_menu(item="Fork")
+    fork_query = query.click_dropdown_menu(text="Fork")
     assert "Copy of (#4)" in fork_query.title
 
 
 def test_query_archive(
     create_queries: typing.Callable[..., None],
     login_page: LoginPage,
-    server_url,
+    server_url: str,
     selenium,
     root_user: User,
-    variables,
+    variables: typing.Dict,
 ) -> None:
     page = login_page.login(email=root_user.email, password=root_user.password)
     search = page.search("Archive Query")
     query = search.queries[0].click()
-    query.dropdown_menu(item="Archive")
+    query.click_dropdown_menu(text="Archive")
     assert query.query_tag == "Archived"
