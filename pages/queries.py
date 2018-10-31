@@ -97,11 +97,11 @@ class QueryDetailPage(Page):
         self.find_element(*self._query_publish_button_locator).click()
 
     @property
-    def query_tag(self) -> str:
+    def query_tag(self) -> typing.Any:
         return self.find_element(*self._query_tag_locator).text
 
     @property
-    def title(self) -> str:
+    def title(self) -> typing.Any:
         self.wait.until(
             lambda _: self.find_element(*self._query_name_locator).is_displayed()
         )
