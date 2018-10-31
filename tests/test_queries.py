@@ -183,10 +183,10 @@ def test_edit_query_description(
     root_user: User,
     variables: typing.Dict,
 ) -> None:
+    default_description = variables["default"]["queries"]["default"]["description"]
     page = login_page.login(email=root_user.email, password=root_user.password)
     search = page.search("Default Query")
     query = search.queries[0].click()
-    default_description = variables["default"]["queries"]["default"]["description"]
     assert query.description == default_description
     query.edit_description(" NEW NEW")
     assert query.description == f"{default_description} NEW NEW"
@@ -203,7 +203,7 @@ def test_edit_query_source(
     page = login_page.login(email=root_user.email, password=root_user.password)
     search = page.search("Default Query")
     query = search.queries[0].click()
-    query.edit_source.click()
+    query.edit_source_button.click()
     assert "/source" in selenium.current_url
 
 

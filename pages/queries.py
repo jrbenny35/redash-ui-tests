@@ -71,9 +71,9 @@ class QueryDetailPage(Page):
                 item.click()
                 self.find_element(*self._query_modal_archive_locator).click()
                 return
-        return Exception(f"{item} was not found within the dropdown menu.")
+        raise ValueError(f"{item} was not found within the dropdown menu.")
 
-    def edit_description(self, description=None):
+    def edit_description(self, description: str) -> None:
         try:
             self.find_element(*self._query_description_blank_locator).click()
         except Exception:
@@ -83,10 +83,10 @@ class QueryDetailPage(Page):
         element.send_keys(Keys.ENTER)
 
     @property
-    def edit_source(self) -> typing.Any:
+    def edit_source_button(self) -> typing.Any:
         return self.find_element(*self._query_edit_source_locator)
 
-    def edit_title(self, title=None):
+    def edit_title(self, title: str) -> None:
         element = self.find_element(*self._query_name_locator)
         element.click()
         element = self.find_element(*self._query_name_edit_locator)
@@ -97,11 +97,11 @@ class QueryDetailPage(Page):
         self.find_element(*self._query_publish_button_locator).click()
 
     @property
-    def query_tag(self) -> typing.Any:
+    def query_tag(self) -> str:
         return self.find_element(*self._query_tag_locator).text
 
     @property
-    def title(self) -> typing.Any:
+    def title(self) -> str:
         self.wait.until(
             lambda _: self.find_element(*self._query_name_locator).is_displayed()
         )
