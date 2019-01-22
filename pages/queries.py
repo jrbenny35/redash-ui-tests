@@ -2,7 +2,6 @@
 
 """Page model for the queries page."""
 
-import time
 import typing
 
 from pypom import Page, Region
