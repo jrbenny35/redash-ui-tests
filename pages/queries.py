@@ -49,8 +49,7 @@ class QueryDetailPage(Page):
     )
     _query_name_edit_locator: Locator = (
         By.CSS_SELECTOR,
-        ".page-title > h3:nth-child(2) > "
-        "edit-in-place:nth-child(1) > textarea",
+        ".page-title > h3:nth-child(2) > edit-in-place:nth-child(1) > textarea",
     )
     _query_publish_button_locator: Locator = (By.CSS_SELECTOR, ".btn-publish")
     _query_tag_locator: Locator = (
@@ -60,8 +59,8 @@ class QueryDetailPage(Page):
 
     @property
     def description(self) -> typing.Any:
-        self.wait.until(lambda _: self.is_element_displayed(
-            *self._query_description_locator)
+        self.wait.until(
+            lambda _: self.is_element_displayed(*self._query_description_locator)
         )
         return self.find_element(*self._query_description_locator).text
 
